@@ -1,0 +1,13 @@
+docker_image: node:alpine
+
+steps:
+  - npm install
+  - npm run build
+
+gateway:
+  development:
+    hosts: []
+    paths: []
+  production:
+    hosts: []
+    paths: []

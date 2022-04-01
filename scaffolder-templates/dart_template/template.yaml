@@ -1,17 +1,23 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: create-react-app-template
-  title: Create React App Template
-  description: Create a new CRA website project
+  name: dart-microservice
+  title: Dart Microservice
+  description: Crie um microserviço com Dart, Shelf Modular e Fluent Query Builder
   tags:
-    - react
-    - cra
+    - recommended
+    - dart
+    - shelf-modular
+    - json-serializable
+    - simple-logger
+    - fluent-query-builder
+    - jedi-common
+
 spec:
-  owner: web@example.com
-  type: website
+  owner: desenvolvimento@consigmais.com.br
+  type: service
   parameters:
-    - title: Provide some simple information
+    - title: Informações sobre o projeto
       required:
         - component_id
         - owner
@@ -19,26 +25,26 @@ spec:
         component_id:
           title: Name
           type: string
-          description: Unique name of the component
+          description: Nome único do componente
           ui:field: EntityNamePicker
         description:
           title: Description
           type: string
-          description: Help others understand what this website is for.
+          description: Descrição do projeto, ajude seus amigos a entender do que ele se trata
         owner:
           title: Owner
           type: string
-          description: Owner of the component
+          description: Dono do componente
           ui:field: OwnerPicker
           ui:options:
             allowedKinds:
               - Group
-    - title: Choose a location
+    - title: Escolha a localização do código
       required:
         - repoUrl
       properties:
         repoUrl:
-          title: Repository Location
+          title: Localidade do repositório
           type: string
           ui:field: RepoUrlPicker
           ui:options:
@@ -46,12 +52,13 @@ spec:
               - github.com
   steps:
     - id: template
-      name: Fetch Skeleton + Template
-      action: fetch:template
+      name: Baixando o Template
+      action: 'fetch:template'
       input:
-        url: ./skeleton
+        url: ./microservice
         copyWithoutRender:
-          - .github/workflows/*
+          - lib/*
+          - test/*
         values:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
@@ -59,11 +66,10 @@ spec:
           owner: ${{ parameters.owner }}
 
     - id: publish
-      name: Publish
-      action: publish:github
+      name: Publicando
+      action: 'publish:github'
       input:
-        allowedHosts:
-          - github.com
+        allowedHosts: [ "github.com" ]
         description: This is ${{ parameters.component_id }}
         repoUrl: ${{ parameters.repoUrl }}
 
@@ -76,8 +82,8 @@ spec:
         contentType: 'json'
 
     - id: register
-      name: Register
-      action: catalog:register
+      name: Registrando no catalogo
+      action: 'catalog:register'
       input:
         repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
         catalogInfoPath: "/template.yaml"

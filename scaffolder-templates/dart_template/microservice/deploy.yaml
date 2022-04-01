@@ -1,0 +1,14 @@
+docker_image: dart:stable
+
+steps:
+  - dart pub get
+  - dart run build_runner build
+  - ./test.sh
+
+gateway:
+  development:
+    hosts: []
+    paths: []
+  production:
+    hosts: []
+    paths: []

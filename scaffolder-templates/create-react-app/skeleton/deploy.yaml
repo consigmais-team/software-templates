@@ -1,0 +1,16 @@
+docker_image: node:14-alpine
+
+build_folder: build
+
+steps:
+  - cp .env.${ENV} .env.local
+  - yarn install
+  - yarn build
+
+gateway:
+  development:
+    hosts: []
+    paths: []
+  production:
+    hosts: []
+    paths: []

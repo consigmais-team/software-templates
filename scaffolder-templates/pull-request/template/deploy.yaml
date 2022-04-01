@@ -1,0 +1,11 @@
+docker_image: alpine
+
+steps: []
+
+gateway:
+  development:
+    hosts: []
+    paths: []
+  production:
+    hosts: []
+    paths: []

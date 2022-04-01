@@ -9,24 +9,33 @@ spec:
   type: service
 
   parameters:
-    - title: Fill in some steps
+    - title: Preencha as informações
       required:
         - name
       properties:
         name:
-          title: Name
+          title: Nome
           type: string
-          description: Unique name of the component
+          description: Nome único do componente
           ui:field: EntityNamePicker
           ui:autofocus: true
         description:
-          title: Description
+          title: Descrição
           type: string
-          description: Description of the component
-        targetPath:
-          title: Target Path in repo
+          description: Descrição do componente
+        type:
+          title: Tipo
           type: string
-          description: Name of the directory to create in the repository
+          enum: ["service", "website", "library"]
+          description: Tipo do componente
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
     - title: Choose a location
       required:
         - repoUrl
@@ -41,32 +50,32 @@ spec:
 
   steps:
     - id: fetch-base
-      name: Fetch Base
+      name: Gerando arquivos
       action: fetch:template
       input:
         url: ./template
         values:
           name: ${{parameters.name}}
 
-    - id: fetch-docs
-      name: Fetch Docs
-      action: fetch:plain
+    - id: webhook
+      name: Adicionando Webhook
+      action: 'github:webhook'
       input:
-        targetPath: ./community
-        url: https://github.com/backstage/community/tree/main/backstage-community-sessions
+        repoUrl: ${{ parameters.repoUrl }}
+        webhookUrl: https://jenkins.consigmais.com.br/generic-webhook-trigger/invoke?token=consigmais_webhook
+        contentType: 'json'
 
     - id: publish
-      name: Publish
+      name: Publicando PR
       action: publish:github:pull-request
       input:
         repoUrl: ${{ parameters.repoUrl }}
-        title: "Create new project: ${{parameters.name}}"
-        branchName: create-${{parameters.name}}
+        title: "Preparando para a esteira CI/CD: ${{parameters.name}}"
+        branchName: deployment
         description: |
-          # New project: ${{parameters.name}}
+          # Preparando para a esteira CI/CD: ${{parameters.name}}
 
           ${{ parameters.description if parameters.description }}
-        targetPath: ${{ parameters.targetPath if parameters.targetPath else parameters.name }}
 
   output:
     links:

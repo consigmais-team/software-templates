@@ -1,0 +1,13 @@
+docker_image: node:alpine
+
+steps:
+  - yarn install
+  - yarn export
+
+gateway:
+  development:
+    hosts: []
+    paths: []
+  production:
+    hosts: []
+    paths: []

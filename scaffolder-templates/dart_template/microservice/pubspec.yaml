@@ -1,0 +1,40 @@
+name: microservice
+description: A server app using the shelf package, modular and Docker.
+version: 0.0.1
+publish_to: none
+# homepage: https://www.example.com
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+
+dependencies:
+  args: ^2.0.0
+  shelf: ^1.3.0
+  shelf_modular: ^1.0.1
+  dart_jsonwebtoken: ^2.4.0
+  dio: ^4.0.4
+  modular_test: ^1.0.1+1
+  dotenv: ^3.0.0
+  redis: ^2.2.0
+  instant: ^0.4.1
+  shelf_router: ^1.1.2
+  json_serializable: ^6.1.5
+  simple_logger: ^1.9.0
+  fluent_query_builder: ^3.2.1
+
+  jedi_database:
+    hosted: https://unpub.consigmais.com.br
+    version: ^1.0.1
+
+  jedi_common:
+    hosted: https://unpub.consigmais.com.br
+    version: ^0.0.10
+
+dev_dependencies:
+  http: ^0.13.0
+  lints: ^1.0.0
+  test_process: ^2.0.0
+  test: ^1.15.0
+  build_runner: ^2.1.8
+  mockito: ^5.1.0
+  shelf_test_handler: ^2.0.0
