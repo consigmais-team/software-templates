@@ -1,0 +1,97 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: flutter-webapp
+  title: Flutter Web App
+  description: Crie web app Flutter
+  tags:
+    - recommended
+    - dart
+    - shelf-modular
+    - json-serializable
+    - simple-logger
+    - fluent-query-builder
+    - jedi-common
+
+spec:
+  owner: desenvolvimento@consigmais.com.br
+  type: service
+  parameters:
+    - title: Informações sobre o projeto
+      required:
+        - component_id
+        - owner
+      properties:
+        component_id:
+          title: Name
+          type: string
+          description: Nome único do componente
+          ui:field: EntityNamePicker
+        description:
+          title: Description
+          type: string
+          description: Descrição do projeto, ajude seus amigos a entender do que ele se trata
+        owner:
+          title: Owner
+          type: string
+          description: Dono do componente
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+    - title: Escolha a localização do código
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Localidade do repositório
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+  steps:
+    - id: template
+      name: Baixando o Template
+      action: 'fetch:template'
+      input:
+        url: ./microservice
+        copyWithoutRender:
+          - lib/*
+          - test/*
+        values:
+          component_id: ${{ parameters.component_id }}
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          owner: ${{ parameters.owner }}
+
+    - id: publish
+      name: Publicando
+      action: 'publish:github'
+      input:
+        allowedHosts: [ "github.com" ]
+        description: This is ${{ parameters.component_id }}
+        repoUrl: ${{ parameters.repoUrl }}
+
+    - id: webhook
+      name: Adicionando Webhook
+      action: 'github:webhook'
+      input:
+        repoUrl: ${{ parameters.repoUrl }}
+        webhookUrl: https://jenkins.consigmais.com.br/generic-webhook-trigger/invoke?token=consigmais_webhook
+        contentType: 'json'
+
+    - id: register
+      name: Registrando no catalogo
+      action: 'catalog:register'
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/template.yaml"
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
