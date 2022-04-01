@@ -30,6 +30,45 @@ spec:
           type: string
           enum: ["service", "website", "library"]
           description: Tipo do componente
+        docker_image:
+          title: Imagem Docker para construir o projeto
+          type: string
+          description: Imagem docker que será utilizada durante a fase de build da esteira
+        build_steps:
+          title: Passos do build
+          type: array
+          items: {
+            type: string
+          }
+          description: "Lista de comandos usados para construir o projeto na esteira, eg: npm install, npm run build"
+        dev_hosts:
+          title: Hosts de acesso
+          type: array
+          items: {
+            type: string
+          }
+          description: "Hosts que serão usadas para acessar esse sistema em dev eg: dev.example.com"
+        dev_paths:
+          title: Base paths
+          type: array
+          items: {
+            type: string
+          }
+          description: "Caminhos base a serem usados pelo sistema em dev (base path). Eg: /api"
+        prod_hosts:
+          title: Hosts de acesso
+          type: array
+          items: {
+            type: string
+          }
+          description: "Hosts que serão usadas para acessar esse sistema em prod eg: dev.example.com"
+        prod_paths:
+          title: Base paths
+          type: array
+          items: {
+            type: string
+          }
+          description: "Caminhos base a serem usados pelo sistema em prod (base path). Eg: /api"
         owner:
           title: Dono
           type: string
