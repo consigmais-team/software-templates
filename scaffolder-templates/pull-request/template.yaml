@@ -11,7 +11,7 @@ spec:
   parameters:
     - title: Preencha as informações
       required:
-        - name
+        - component_id
         - description
         - type
       properties:

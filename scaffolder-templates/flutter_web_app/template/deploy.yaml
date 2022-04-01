@@ -1,0 +1,14 @@
+docker_image: cirrusci/flutter
+
+steps:
+  - flutter pub get
+  - flutter build web --web-renderer html --release
+  - "cp -r build/web/assets/assets/locale build/web/assets/locale 2>/dev/null || :"
+
+gateway:
+  development:
+    hosts: []
+    paths: []
+  production:
+    hosts: []
+    paths: []
