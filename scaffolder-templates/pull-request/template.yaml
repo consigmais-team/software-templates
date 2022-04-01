@@ -12,8 +12,10 @@ spec:
     - title: Preencha as informações
       required:
         - name
+        - description
+        - type
       properties:
-        name:
+        component_id:
           title: Nome
           type: string
           description: Nome único do componente
@@ -55,7 +57,10 @@ spec:
       input:
         url: ./template
         values:
-          name: ${{parameters.name}}
+          component_id: ${{ parameters.component_id }}
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          owner: ${{ parameters.owner }}
 
     - id: webhook
       name: Adicionando Webhook
@@ -76,6 +81,14 @@ spec:
           # Preparando para a esteira CI/CD: ${{parameters.name}}
 
           ${{ parameters.description if parameters.description }}
+
+    - id: register
+      name: Registrando no catalogo
+      action: 'catalog:register'
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: "/template.yaml"
+
 
   output:
     links:
