@@ -54,9 +54,6 @@ spec:
       action: 'fetch:template'
       input:
         url: ./microservice
-        copyWithoutRender:
-          - lib/*
-          - test/*
         values:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
