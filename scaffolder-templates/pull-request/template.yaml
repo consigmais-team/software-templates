@@ -2,8 +2,8 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: pull-request
-  title: Pull Request Action template
-  description: scaffolder v1beta3 template demo publishing to PR on existing git repository
+  title: Integrar projeto ao CI/CD
+  description: Adicione um projeto existente a esteira CI/CD
 spec:
   owner: backstage/techdocs-core
   type: service
@@ -29,14 +29,14 @@ spec:
           enum: ["service", "website", "library"]
           description: Tipo do componente
         owner:
-          title: Owner
+          title: Dono
           type: string
-          description: Owner of the component
+          description: Dono do componente
           ui:field: OwnerPicker
           ui:options:
             allowedKinds:
               - Group
-    - title: Choose a location
+    - title: Escolha uma localização
       required:
         - repoUrl
       properties:
