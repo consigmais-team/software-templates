@@ -1,48 +1,48 @@
-{% if  values.docker_image %}
+{%- if  values.docker_image %}
 docker_image: alpine
 {% endif %}
 
-{% if  values.build_steps %}
+{%- if  values.build_steps %}
 steps:
-{% for step in values.build_steps %}
+{%- for step in values.build_steps %}
   - ${{ step }}
-{% endfor %}
-{% else %}
+{%- endfor %}
+{%- else %}
 steps: []
-{% endif %}
+{%- endif %}
 
 gateway:
   development:
-  {% if  values.dev_hosts %}
+  {%- if  values.dev_hosts %}
     hosts:
     {% for host in values.dev_hosts %}
       - ${{ host }}
     {% endfor %}
-  {% else %}
+  {%- else %}
     hosts: []
-  {% endif %}
-  {% if  values.dev_paths %}
+  {%- endif %}
+  {%- if  values.dev_paths %}
     paths:
-    {% for path in values.dev_paths %}
+    {%- for path in values.dev_paths %}
       - ${{ path }}
-    {% endfor %}
-  {% else %}
+    {%- endfor %}
+  {%- else %}
     paths: []
-  {% endif %}
+  {%- endif %}
   production:
-  {% if  values.prod_hosts %}
+  {%- if  values.prod_hosts %}
     hosts:
-    {% for host in values.prod_hosts %}
+    {%- for host in values.prod_hosts %}
       - ${{ host }}
-    {% endfor %}
-  {% else %}
+    {%- endfor %}
+  {%- else %}
     hosts: []
-  {% endif %}
-  {% if  values.prod_paths %}
+  {%- endif %}
+  {%- if  values.prod_paths %}
     paths:
-    {% for path in values.prod_paths %}
+    {%- for path in values.prod_paths %}
       - ${{ path }}
-    {% endfor %}
-  {% else %}
+    {%- endfor %}
+  {%- else %}
     paths: []
-  {% endif %}
+  {%- endif %}
