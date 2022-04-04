@@ -1,8 +1,10 @@
-{%- if  values.docker_image %}
+{%- if values.docker_image %}
+docker_image: ${{ values.docker_image }}
+{% else %}
 docker_image: alpine
 {% endif %}
 
-{%- if  values.build_steps %}
+{%- if values.build_steps %}
 steps:
 {%- for step in values.build_steps %}
   - ${{ step }}
@@ -13,7 +15,7 @@ steps: []
 
 gateway:
   development:
-  {%- if  values.dev_hosts %}
+  {%- if values.dev_hosts %}
     hosts:
     {% for host in values.dev_hosts %}
       - ${{ host }}
@@ -21,7 +23,7 @@ gateway:
   {%- else %}
     hosts: []
   {%- endif %}
-  {%- if  values.dev_paths %}
+  {%- if values.dev_paths %}
     paths:
     {%- for path in values.dev_paths %}
       - ${{ path }}
@@ -30,7 +32,7 @@ gateway:
     paths: []
   {%- endif %}
   production:
-  {%- if  values.prod_hosts %}
+  {%- if values.prod_hosts %}
     hosts:
     {%- for host in values.prod_hosts %}
       - ${{ host }}
@@ -38,7 +40,7 @@ gateway:
   {%- else %}
     hosts: []
   {%- endif %}
-  {%- if  values.prod_paths %}
+  {%- if values.prod_paths %}
     paths:
     {%- for path in values.prod_paths %}
       - ${{ path }}

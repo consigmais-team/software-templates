@@ -42,28 +42,28 @@ spec:
           }
           description: "Lista de comandos usados para construir o projeto na esteira, eg: npm install, npm run build"
         dev_hosts:
-          title: Hosts de acesso
+          title: Hosts de acesso em dev
           type: array
           items: {
             type: string
           }
           description: "Hosts que serão usadas para acessar esse sistema em dev eg: dev.example.com"
         dev_paths:
-          title: Base paths
+          title: Base paths em dev
           type: array
           items: {
             type: string
           }
           description: "Caminhos base a serem usados pelo sistema em dev (base path). Eg: /api"
         prod_hosts:
-          title: Hosts de acesso
+          title: Hosts de acesso em prod
           type: array
           items: {
             type: string
           }
-          description: "Hosts que serão usadas para acessar esse sistema em prod eg: dev.example.com"
+          description: "Hosts que serão usadas para acessar esse sistema em prod eg: prod.example.com"
         prod_paths:
-          title: Base paths
+          title: Base paths em prod
           type: array
           items: {
             type: string
@@ -99,6 +99,12 @@ spec:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          docker_image: ${{ parameters.docker_image }}
+          build_steps: ${{ parameters.build_steps }}
+          dev_hosts: ${{ parameters.dev_hosts }}
+          dev_paths: ${{ parameters.dev_paths }}
+          prod_hosts: ${{ parameters.prod_hosts }}
+          prod_paths: ${{ parameters.prod_paths }}
           owner: ${{ parameters.owner }}
 
     - id: webhook
@@ -125,8 +131,9 @@ spec:
       name: Registrando no catalogo
       action: 'catalog:register'
       input:
-        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        repoContentsUrl: ${{ parameters.repoUrl | parseRepoUrl }}
         catalogInfoPath: "/catalog-info.yaml"
+        optional: true
 
 
   output:
