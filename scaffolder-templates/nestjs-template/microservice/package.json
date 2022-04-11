@@ -1,5 +1,5 @@
 {
-  "name": "microservice",
+  "name": "${{ values.component_id }}",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -13,7 +13,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "start:pm2": "pm2 start dist/main.js --no-daemon --name microservice --max-memory-restart 500M",
+    "start:pm2": "pm2 start dist/main.js --no-daemon --name ${{ values.component_id }} --max-memory-restart 500M",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
