@@ -1,0 +1,6 @@
+.idea
+bin
+*/obj/Debug
+*/obj/Release
+.env
+coverage.opencover.xml

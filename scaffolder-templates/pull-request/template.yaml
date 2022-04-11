@@ -120,10 +120,10 @@ spec:
       action: publish:github:pull-request
       input:
         repoUrl: ${{ parameters.repoUrl }}
-        title: "Preparando para a esteira CI/CD: ${{parameters.name}}"
+        title: "Preparando para a esteira CI/CD: ${{ parameters.name }}"
         branchName: deployment
         description: |
-          # Preparando para a esteira CI/CD: ${{parameters.name}}
+          # Preparando para a esteira CI/CD: ${{ parameters.name }}
 
           ${{ parameters.description if parameters.description }}
 
@@ -133,7 +133,6 @@ spec:
       input:
         repoContentsUrl: ${{ parameters.repoUrl | parseRepoUrl }}
         catalogInfoPath: "/catalog-info.yaml"
-        optional: true
 
 
   output:

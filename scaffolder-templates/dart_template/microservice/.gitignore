@@ -6,6 +6,7 @@
 build/
 .env*
 .env
+!env.sample
 
 .idea
 bin/server

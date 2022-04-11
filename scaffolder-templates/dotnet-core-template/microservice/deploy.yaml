@@ -1,0 +1,5 @@
+docker_image: mcr.microsoft.com/dotnet/sdk:6.0
+
+steps:
+  - dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  - dotnet build -c Release
