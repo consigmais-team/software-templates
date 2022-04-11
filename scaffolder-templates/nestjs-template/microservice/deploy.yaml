@@ -1,4 +1,4 @@
-docker_image: node:alpine
+docker_image: node:16-alpine
 
 steps:
   - npm install
