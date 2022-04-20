@@ -106,6 +106,7 @@ spec:
           prod_hosts: ${{ parameters.prod_hosts }}
           prod_paths: ${{ parameters.prod_paths }}
           owner: ${{ parameters.owner }}
+          type: ${{ parameters.type }}
 
     - id: webhook
       name: Adicionando Webhook
